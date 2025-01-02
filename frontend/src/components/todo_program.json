@@ -1,0 +1,305 @@
+{
+  "address": "HaH9whuijUtKQK7jr2Su5GNqRRPRDLUXQxEKoQ94VhfU",
+  "metadata": {
+    "name": "todo_program",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "adding_task",
+      "discriminator": [
+        220,
+        23,
+        140,
+        58,
+        16,
+        79,
+        103,
+        48
+      ],
+      "accounts": [
+        {
+          "name": "todo_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  100,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "todo_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "content",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "initialize_account",
+      "discriminator": [
+        74,
+        115,
+        99,
+        93,
+        197,
+        69,
+        103,
+        7
+      ],
+      "accounts": [
+        {
+          "name": "todo_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  100,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "removing_task",
+      "discriminator": [
+        167,
+        234,
+        194,
+        109,
+        188,
+        8,
+        32,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "todo_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  100,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "todo_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "toggling_task",
+      "discriminator": [
+        185,
+        80,
+        235,
+        94,
+        75,
+        233,
+        72,
+        81
+      ],
+      "accounts": [
+        {
+          "name": "todo_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  100,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "todo_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "TodoAccount",
+      "discriminator": [
+        31,
+        86,
+        84,
+        40,
+        187,
+        31,
+        251,
+        132
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ContentTooLong",
+      "msg": "The content must be 280 characters or less"
+    },
+    {
+      "code": 6001,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow when updating task count"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidAuthority",
+      "msg": "Invalid authority provided for this operation"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidTaskIndex",
+      "msg": "Task index is invalid"
+    },
+    {
+      "code": 6004,
+      "name": "TaskNotFound",
+      "msg": "Task not found"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidTaskState",
+      "msg": "Invalid task state transition"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidContent",
+      "msg": "Invalid task content"
+    },
+    {
+      "code": 6007,
+      "name": "TaskAlreadyCompleted",
+      "msg": "Task already completed"
+    }
+  ],
+  "types": [
+    {
+      "name": "Task",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "name": "completed",
+            "type": "bool"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TodoAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "tasks",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Task"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
